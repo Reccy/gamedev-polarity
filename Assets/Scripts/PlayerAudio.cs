@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour {
 
-    [SerializeField] AudioClip[] audioClips;
-    //List<AudioSource>
+    AudioSource[] audioSources;
 
     bool alreadyPlayingGrounded = false;
 
     private void Awake()
     {
-        foreach (AudioClip clip in audioClips){
-            gameObject.AddComponent<AudioSource>();
-
-        }
+        audioSources = GetComponents<AudioSource>();
 
     }
 
@@ -25,25 +21,27 @@ public class PlayerAudio : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        print(audioSources[0].isPlaying); 
 	}
 
-    public void PlayJumpSound(){
-        //audioSource.PlayOneShot(jump);
+    public void PlayJumpSound()
+    {
+        audioSources[0].PlayOneShot(audioSources[0].clip);
     }
 
     public void PlayGrounded()
     {
         if (!alreadyPlayingGrounded)
         {
-            //audioSource.loop = true;
-            //audioSource.PlayOneShot(grounded);
-            //alreadyPlayingGrounded = true;
+            audioSources[1].Play();
+            alreadyPlayingGrounded = true;
         }
     }
 
     public void StopGrounded()
     {
-        //audioSource.Stop();
+        audioSources[0].Stop();
     }
+
+
 }

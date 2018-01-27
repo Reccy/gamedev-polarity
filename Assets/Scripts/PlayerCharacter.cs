@@ -36,11 +36,17 @@ public class PlayerCharacter : MonoBehaviour {
     /// </summary>
     private Vector2 mouseWorldPosition;
 
+    /// <summary>
+    /// The rigidbody of the player character
+    /// </summary>
+    private Rigidbody2D rb;
+
     PlayerAudio playerAudio;
     
     private void Awake()
     {
         playerAudio = GetComponent<PlayerAudio>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
@@ -52,6 +58,10 @@ public class PlayerCharacter : MonoBehaviour {
     
     private void Update()
     {
+        Vector2 v = rb.velocity;
+        v.x = 0;
+        rb.velocity = v;
+
         CheckInput();
     }
 
@@ -112,12 +122,13 @@ public class PlayerCharacter : MonoBehaviour {
         mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 lineRendererPosition = (Vector2)FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GetComponent<PlayerCharging>().percentageCharged > chargeCost)
         {
             RaycastHit2D hit = Physics2D.CircleCast(transform.position, raycheckLength, lineRendererPosition - (Vector2)transform.position, Mathf.Abs(Vector2.Distance(transform.position, lineRendererPosition)), LayerMask.NameToLayer("Environment"));
 
             if (!hit)
             {
+                playerAudio.PlayJumpSound();
                 transform.position = FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                 FindObjectOfType<PlayerCharging>().percentageCharged -= chargeCost;

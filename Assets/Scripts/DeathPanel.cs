@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeathPanel : MonoBehaviour {
 
     [SerializeField] float fadeInTime = 1f;
+    [SerializeField] Text timeText;
+    float deathTimeInSeconds;
 
     Image panel;
+    Timer timer;
 
     void Awake()
     {
         panel = GetComponent<Image>();
+        timer = FindObjectOfType<Timer>();
     }
 
     // Use this for initialization
@@ -20,7 +25,29 @@ public class DeathPanel : MonoBehaviour {
 	}
 
     public void StartFadeIn(){
+        SetTimers();
         StartCoroutine(FadeIn());
+    }
+
+    void SetTimers(){
+        deathTimeInSeconds = timer.timeInSeconds;
+
+        int minutes = Mathf.FloorToInt(deathTimeInSeconds / 60f);
+        int seconds = Mathf.RoundToInt(deathTimeInSeconds % 60f);
+
+        string formatedSeconds = seconds.ToString();
+
+        if (seconds == 60)
+        {
+            seconds = 0;
+            minutes += 1;
+        }
+
+        timeText.text = "Your time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
+
+
+        timer.gameObject.SetActive(false);
+
     }
 
     IEnumerator FadeIn(){
@@ -37,5 +64,10 @@ public class DeathPanel : MonoBehaviour {
         }
 
         yield return null;
+    }
+
+    public void RestartLevel(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 }

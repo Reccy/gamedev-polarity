@@ -15,7 +15,12 @@ public class PlayerCharging : MonoBehaviour {
         chargingRadialImage = chargingRadialGameObject.GetComponent<Image>();
         playerCharacter = FindObjectOfType<PlayerCharacter>();
     }
-    
+
+    private void Update()
+    {
+        percentageCharged = Mathf.Clamp(percentageCharged, 0, 100);
+    }
+
     private void FixedUpdate()
     {
         if (percentageCharged < 100f)
