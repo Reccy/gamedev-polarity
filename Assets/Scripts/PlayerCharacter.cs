@@ -63,8 +63,6 @@ public class PlayerCharacter : MonoBehaviour {
 
         if (hit)
         {
-            Debug.Log(hit.collider.tag);
-
             if (hit.collider.CompareTag("Environment"))
             {
                 isGrounded = true;
@@ -102,21 +100,13 @@ public class PlayerCharacter : MonoBehaviour {
     private void CheckInput()
     {
         mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 lineRendererPosition = (Vector2)FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
 
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position, raycheckLength, (FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1) - transform.position).normalized, Vector2.Distance(FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1), transform.position), LayerMask.NameToLayer("Environment"));
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, raycheckLength, lineRendererPosition - (Vector2)transform.position, Mathf.Abs(Vector2.Distance(transform.position, lineRendererPosition)), LayerMask.NameToLayer("Environment"));
 
-            if (hit)
-            {
-                if (Vector2.Distance(transform.position, hit.point) < FindObjectOfType<PlayerToMouseLine>().maxLineLength)
-                {
-                    transform.position = FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
-                    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-                    isGrounded = false;
-                }
-            }
-            else
+            if (!hit)
             {
                 transform.position = FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);

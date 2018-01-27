@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerToMouseLine : MonoBehaviour {
 
     [SerializeField] public float maxLineLength;
-
-    [HideInInspector]
+    
     public LineRenderer lineRenderer;
 
     void Awake()
