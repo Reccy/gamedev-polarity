@@ -27,13 +27,20 @@ public class PlayerCharacter : MonoBehaviour {
     }
 
     /// <summary>
+    /// The amount to deduct from charge when the player jumps
+    /// </summary>
+    public int chargeCost = 35;
+
+    /// <summary>
     /// The position of the mouse within the world space
     /// </summary>
     private Vector2 mouseWorldPosition;
+
+    PlayerAudio playerAudio;
     
     private void Awake()
     {
-        
+        playerAudio = GetComponent<PlayerAudio>();
     }
 
     private void FixedUpdate()
@@ -66,15 +73,18 @@ public class PlayerCharacter : MonoBehaviour {
             if (hit.collider.CompareTag("Environment"))
             {
                 isGrounded = true;
+                //playerAudio.PlayGrounded();
             }
             else
             {
                 isGrounded = false;
+                //playerAudio.StopGrounded();
             }
         }
         else
         {
             isGrounded = false;
+            //playerAudio.StopGrounded();
         }
     }
     
@@ -110,6 +120,7 @@ public class PlayerCharacter : MonoBehaviour {
             {
                 transform.position = FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                FindObjectOfType<PlayerCharging>().percentageCharged -= chargeCost;
                 isGrounded = false;
             }
         }

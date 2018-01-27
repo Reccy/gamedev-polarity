@@ -7,7 +7,7 @@ public class PlayerReversePolarity : MonoBehaviour {
     GameObject environment;
     PlayerCharging playerCharging;
 
-    [SerializeField] int chargeCost = 100;
+    [SerializeField] public int chargeCost = 100;
 
     // Use this for initialization
     private void Awake()

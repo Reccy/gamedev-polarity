@@ -29,7 +29,7 @@ public class DeathPanel : MonoBehaviour {
         while(panel.color.a < 1f)
         {
             panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, panel.color.a + (1f/fadeInIncrements));
-            yield return new WaitForSeconds(fadeInTime / fadeInIncrements);
+            yield return new WaitForSecondsRealtime(fadeInTime / fadeInIncrements);
         }
 
         foreach (Transform child in transform){

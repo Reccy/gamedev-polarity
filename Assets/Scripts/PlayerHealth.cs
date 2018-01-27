@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
-
-    AudioSource audioSource;
+    
     DeathPanel deathPanel;
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         deathPanel = FindObjectOfType<DeathPanel>();
     }
 
@@ -31,8 +29,6 @@ public class PlayerHealth : MonoBehaviour {
     IEnumerator DeathCoroutine()
     {
         //TODO change death sound;
-        audioSource.PlayOneShot(audioSource.clip);
-
         deathPanel.gameObject.SetActive(true);
         deathPanel.StartFadeIn();
 
