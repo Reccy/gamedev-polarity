@@ -16,9 +16,13 @@ public class PlayerReversePolarity : MonoBehaviour {
         playerCharging = GetComponent<PlayerCharging>();
     }
 
-    void Start () {
-		StartCoroutine(Test()); 
-	}
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            ReversePolarity();
+        }
+    }
 
     public void ReversePolarity()
     {
@@ -30,10 +34,5 @@ public class PlayerReversePolarity : MonoBehaviour {
         transform.position = playerReversedPosition;
 
 
-    }
-
-    IEnumerator Test (){
-        yield return new WaitForSeconds(2f);
-        ReversePolarity();
     }
 }

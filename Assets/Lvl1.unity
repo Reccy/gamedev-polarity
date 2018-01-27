@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13f4dfe133a142daaae7c059b831338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 0
   cameraLeftToWorldPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &709098899
 GameObject:
