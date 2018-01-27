@@ -23,6 +23,7 @@ public class PlayerCharging : MonoBehaviour {
             if (playerCharacter.IsGrounded)
             {
                 percentageCharged = percentageCharged + (chargingSpeed * Time.deltaTime);
+                print("Charging");
             }
         }
 

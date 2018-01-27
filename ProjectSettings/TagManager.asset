@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Environment
+  - Bounds
+  - DeathPanel
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Player
+  - HUD
   - 
   - 
   - 
@@ -41,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 2738869991
     locked: 0
   - name: HUD
     uniqueID: 3537469995

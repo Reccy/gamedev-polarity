@@ -6,17 +6,7 @@ public class PlayerCharacter : MonoBehaviour {
     /// The distance between the mouse and the player that should not cause input
     /// </summary>
     public float movementDeadzone;
-
-    /// <summary>
-    /// Maximum speed for the player in the air
-    /// </summary>
-    public float maxAirSpeed;
-
-    /// <summary>
-    /// How fast the player should accelerate in the air
-    /// </summary>
-    public float airAcceleration;
-
+    
     /// <summary>
     /// How long the raycheck should be for landing on the ground
     /// </summary>
@@ -26,12 +16,7 @@ public class PlayerCharacter : MonoBehaviour {
     /// How fast the player moves left and right
     /// </summary>
     public float horizontalMovementSpeed = 5f;
-
-    /// <summary>
-    /// The current speed of the player in the air
-    /// </summary>
-    private float currentAirSpeed;
-
+    
     /// <summary>
     /// If the player is on the ground or not
     /// </summary>
@@ -53,10 +38,9 @@ public class PlayerCharacter : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        CheckIfGrounded();
+        transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        if (!isGrounded)
-            Fall();
+        CheckIfGrounded();
     }
     
     private void Update()
@@ -74,8 +58,8 @@ public class PlayerCharacter : MonoBehaviour {
     /// </summary>
     private void CheckIfGrounded()
     {
-        RaycastHit2D hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + -Vector2.up * raycheckLength, LayerMask.NameToLayer("Player"));
-        Debug.DrawLine(transform.position, (Vector2)transform.position + -Vector2.up * raycheckLength, Color.red);
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + -Vector2.up * raycheckLength + new Vector2(0, -0.5f), LayerMask.NameToLayer("Environment"));
+        Debug.DrawLine(transform.position, (Vector2)transform.position + -Vector2.up * raycheckLength + new Vector2(0, -0.5f), Color.red);
 
         if (hit)
         {
@@ -83,7 +67,6 @@ public class PlayerCharacter : MonoBehaviour {
 
             if (hit.collider.CompareTag("Environment"))
             {
-                currentAirSpeed = 0;
                 isGrounded = true;
             }
             else
@@ -96,30 +79,13 @@ public class PlayerCharacter : MonoBehaviour {
             isGrounded = false;
         }
     }
-
-    /// <summary>
-    /// Fall according to the laws of gravity
-    /// </summary>
-    private void Fall()
-    {
-        currentAirSpeed += airAcceleration * Time.fixedDeltaTime;
-        currentAirSpeed = Mathf.Min(currentAirSpeed, maxAirSpeed);
-        transform.Translate(-Vector2.up * currentAirSpeed * Time.fixedDeltaTime);
-    }
-
+    
     /// <summary>
     /// Moves the player left
     /// </summary>
     private void MoveLeft()
     {
-        RaycastHit2D hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + -Vector2.right * raycheckLength, LayerMask.NameToLayer("Player"));
-        Debug.DrawLine(transform.position, (Vector2)transform.position + -Vector2.right * raycheckLength, Color.red);
-
-        if (!hit || !hit.collider.CompareTag("Environment"))
-        {
-            transform.Translate(-Vector2.right * horizontalMovementSpeed * Time.fixedDeltaTime * Mathf.Min(movementDeadzone, Mathf.Abs(mouseWorldPosition.x - transform.position.x)));
-        }
-
+        transform.Translate(-Vector2.right * horizontalMovementSpeed * Time.fixedDeltaTime * Mathf.Min(movementDeadzone, Mathf.Abs(mouseWorldPosition.x - transform.position.x)));
     }
 
     /// <summary>
@@ -127,13 +93,7 @@ public class PlayerCharacter : MonoBehaviour {
     /// </summary>
     private void MoveRight()
     {
-        RaycastHit2D hit = Physics2D.Linecast(transform.position, (Vector2)transform.position + Vector2.right * raycheckLength, LayerMask.NameToLayer("Player"));
-        Debug.DrawLine(transform.position, (Vector2)transform.position + Vector2.right * raycheckLength, Color.red);
-
-        if (!hit || !hit.collider.CompareTag("Environment"))
-        {
-            transform.Translate(Vector2.right * horizontalMovementSpeed * Time.fixedDeltaTime * Mathf.Min(movementDeadzone, Mathf.Abs(mouseWorldPosition.x - transform.position.x)));
-        }
+        transform.Translate(Vector2.right * horizontalMovementSpeed * Time.fixedDeltaTime * Mathf.Min(movementDeadzone, Mathf.Abs(mouseWorldPosition.x - transform.position.x)));
     }
 
     /// <summary>
@@ -145,9 +105,23 @@ public class PlayerCharacter : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            transform.position = mouseWorldPosition;
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            isGrounded = false;
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, raycheckLength, (FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1) - transform.position).normalized, Vector2.Distance(FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1), transform.position), LayerMask.NameToLayer("Environment"));
+
+            if (hit)
+            {
+                if (Vector2.Distance(transform.position, hit.point) < FindObjectOfType<PlayerToMouseLine>().maxLineLength)
+                {
+                    transform.position = FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
+                    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                    isGrounded = false;
+                }
+            }
+            else
+            {
+                transform.position = FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                isGrounded = false;
+            }
         }
         
         if (mouseWorldPosition.x > transform.position.x)

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerToMouseLine : MonoBehaviour {
 
-    [SerializeField] float maxLineLength;
+    [SerializeField] public float maxLineLength;
 
-    LineRenderer lineRenderer;
+    [HideInInspector]
+    public LineRenderer lineRenderer;
 
     void Awake()
     {
@@ -32,10 +33,10 @@ public class PlayerToMouseLine : MonoBehaviour {
 
         if (distance > maxLineLength)
         {
-            lineRenderer.SetPosition(1, transform.position + (direction.normalized * maxLineLength));
+            lineRenderer.SetPosition(1, (Vector2)(transform.position + (direction.normalized * maxLineLength)));
         } else
         {
-            lineRenderer.SetPosition(1, lookPos);
+            lineRenderer.SetPosition(1, (Vector2)lookPos);
         }
     }
 }
