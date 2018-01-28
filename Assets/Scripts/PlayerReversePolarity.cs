@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerReversePolarity : MonoBehaviour {
 
     GameObject environment;
     PlayerCharging playerCharging;
+    Tilemap tilemap;
+    Color defaultTilemapColor = new Color(1f, 1f, 1f);
+    [SerializeField] Color reversedPolarityColor;
+    bool polarityReversed = false;
 
     [SerializeField] public int chargeCost = 100;
 
@@ -13,6 +18,7 @@ public class PlayerReversePolarity : MonoBehaviour {
     private void Awake()
     {
         environment = GameObject.FindWithTag("Environment");
+        tilemap = environment.GetComponentInChildren<Tilemap>();
         playerCharging = GetComponent<PlayerCharging>();
     }
 
@@ -33,7 +39,19 @@ public class PlayerReversePolarity : MonoBehaviour {
             yield return new WaitForSecondsRealtime(0.1f);
         }
 
+
+
         Time.timeScale = 0f;
+        polarityReversed = !polarityReversed;
+
+        if(polarityReversed == false)
+        {
+            tilemap.color = defaultTilemapColor;
+        } else 
+        {
+            tilemap.color = reversedPolarityColor;
+        }
+
         yield return new WaitForSecondsRealtime(0.1f);
 
         Vector3 reversedScale = new Vector3(environment.transform.localScale.x, -environment.transform.localScale.y, 1f);

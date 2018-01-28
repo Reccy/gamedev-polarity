@@ -506,7 +506,7 @@ MonoBehaviour:
   movementDeadzone: 5
   raycheckLength: 0.5
   horizontalMovementSpeed: 12
-  chargeCost: 70
+  chargeCost: 35
 --- !u!114 &114508126073195318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -545,6 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d58ebbbc4854155a72461699afe0d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reversedPolarityColor: {r: 1, g: 0.52205884, b: 0.52205884, a: 1}
   chargeCost: 100
 --- !u!114 &114761160946562256
 MonoBehaviour:
