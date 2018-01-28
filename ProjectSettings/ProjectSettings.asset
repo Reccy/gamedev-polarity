@@ -11,19 +11,19 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Polarity v1
+  companyName: GGJ18 - Griffith College Dublin
+  productName: Polarity
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
+  m_SplashScreenBackgroundColor: {r: 0.25490198, g: 0.7137255, b: 0.9019608, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
-  m_SplashScreenOverlayOpacity: 1
-  m_SplashScreenAnimation: 1
+  m_SplashScreenOverlayOpacity: 0.681
+  m_SplashScreenAnimation: 2
   m_SplashScreenLogoStyle: 1
-  m_SplashScreenDrawMode: 0
-  m_SplashScreenBackgroundAnimationZoom: 1
-  m_SplashScreenLogoAnimationZoom: 1
+  m_SplashScreenDrawMode: 1
+  m_SplashScreenBackgroundAnimationZoom: 0.97
+  m_SplashScreenLogoAnimationZoom: 0.549
   m_SplashScreenBackgroundLandscapeAspect: 1
   m_SplashScreenBackgroundPortraitAspect: 1
   m_SplashScreenBackgroundLandscapeUvs:
@@ -38,13 +38,17 @@ PlayerSettings:
     y: 0
     width: 1
     height: 1
-  m_SplashScreenLogos: []
+  m_SplashScreenLogos:
+  - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
+    duration: 2
+  - logo: {fileID: 21300000, guid: 06a73b2688e927d49a2a805b4ea67de5, type: 3}
+    duration: 3
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
-  defaultScreenWidthWeb: 960
-  defaultScreenHeightWeb: 600
+  defaultScreenWidthWeb: 1280
+  defaultScreenHeightWeb: 720
   m_StereoRenderingPath: 0
   m_ActiveColorSpace: 0
   m_MTRendering: 1
@@ -534,7 +538,8 @@ PlayerSettings:
   psp2InfoBarColor: 0
   psp2ScriptOptimizationLevel: 0
   psmSplashimage: {fileID: 0}
-  splashScreenBackgroundSourceLandscape: {fileID: 0}
+  splashScreenBackgroundSourceLandscape: {fileID: 21300000, guid: 881c9d016f057e442ac0595ad3489989,
+    type: 3}
   splashScreenBackgroundSourcePortrait: {fileID: 0}
   spritePackerPolicy: 
   webGLMemorySize: 256
