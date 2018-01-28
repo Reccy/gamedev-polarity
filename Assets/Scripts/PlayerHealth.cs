@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
     
     DeathPanel deathPanel;
+    LevelComplete levelCompletePanel;
     Music musicController;
 
     void Awake()
     {
         deathPanel = FindObjectOfType<DeathPanel>();
+        levelCompletePanel = FindObjectOfType<LevelComplete>();
         musicController = FindObjectOfType<Music>();
     }
 
@@ -42,6 +44,13 @@ public class PlayerHealth : MonoBehaviour {
         if (collision.gameObject.tag == "Bounds")
         {
             Death();
+        }
+
+        if (collision.gameObject.tag == "WinLevel")
+        {
+            levelCompletePanel.gameObject.SetActive(true);
+            levelCompletePanel.StartFadeIn();
+            Destroy(gameObject);
         }
             
     }
