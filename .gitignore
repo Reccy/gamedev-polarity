@@ -37,3 +37,9 @@ sysinfo.txt
 
 # Visual Studio
 .vs/
+
+# License
+license.txt
+
+# Zips
+*.zip
