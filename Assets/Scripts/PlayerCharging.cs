@@ -10,10 +10,12 @@ public class PlayerCharging : MonoBehaviour {
     [SerializeField] float chargingSpeed = 1f;
     [SerializeField] GameObject chargingRadialGameObject;
     Image chargingRadialImage;
+    PlayerAudio playeraudio;
     
     void Awake(){
         chargingRadialImage = chargingRadialGameObject.GetComponent<Image>();
         playerCharacter = FindObjectOfType<PlayerCharacter>();
+        playeraudio = GetComponent<PlayerAudio>();
     }
 
     private void Update()
@@ -28,7 +30,12 @@ public class PlayerCharging : MonoBehaviour {
             if (playerCharacter.IsGrounded)
             {
                 percentageCharged = percentageCharged + (chargingSpeed * Time.deltaTime);
+                playeraudio.PlayGrounded();
+            } else{
+                playeraudio.StopGrounded();
             }
+        }else {
+            playeraudio.StopGrounded();
         }
 
         chargingRadialImage.fillAmount = percentageCharged / 100f;

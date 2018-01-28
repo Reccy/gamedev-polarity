@@ -11,6 +11,7 @@ public class PlayerReversePolarity : MonoBehaviour {
     Color defaultTilemapColor = new Color(1f, 1f, 1f);
     [SerializeField] Color reversedPolarityColor;
     bool polarityReversed = false;
+    PlayerAudio playerAudio;
 
     [SerializeField] public int chargeCost = 100;
 
@@ -20,6 +21,7 @@ public class PlayerReversePolarity : MonoBehaviour {
         environment = GameObject.FindWithTag("Environment");
         tilemap = environment.GetComponentInChildren<Tilemap>();
         playerCharging = GetComponent<PlayerCharging>();
+        playerAudio = GetComponent<PlayerAudio>();
     }
 
     private void Update()
@@ -33,6 +35,7 @@ public class PlayerReversePolarity : MonoBehaviour {
     IEnumerator ReversePolarity()
     {
         playerCharging.percentageCharged -= chargeCost;
+        playerAudio.PlayPolaritySound();
         while(Time.timeScale > 0.1f)
         {
             Time.timeScale = (Time.timeScale - 0.2f);

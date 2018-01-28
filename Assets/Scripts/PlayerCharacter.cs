@@ -45,8 +45,8 @@ public class PlayerCharacter : MonoBehaviour {
     
     private void Awake()
     {
-        playerAudio = GetComponent<PlayerAudio>();
         rb = GetComponent<Rigidbody2D>();
+        playerAudio = GetComponent<PlayerAudio>();
     }
 
     private void FixedUpdate()
@@ -83,18 +83,15 @@ public class PlayerCharacter : MonoBehaviour {
             if (hit.collider.CompareTag("Environment"))
             {
                 isGrounded = true;
-                //playerAudio.PlayGrounded();
             }
             else
             {
                 isGrounded = false;
-                //playerAudio.StopGrounded();
             }
         }
         else
         {
             isGrounded = false;
-            //playerAudio.StopGrounded();
         }
     }
     
@@ -122,7 +119,7 @@ public class PlayerCharacter : MonoBehaviour {
         mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 lineRendererPosition = (Vector2)FindObjectOfType<PlayerToMouseLine>().lineRenderer.GetPosition(1);
 
-        if (Input.GetMouseButtonDown(0) && GetComponent<PlayerCharging>().percentageCharged > chargeCost)
+        if (Input.GetMouseButtonDown(0) && GetComponent<PlayerCharging>().percentageCharged > chargeCost && IsGrounded)
         {
             RaycastHit2D hit = Physics2D.CircleCast(transform.position, raycheckLength, lineRendererPosition - (Vector2)transform.position, Mathf.Abs(Vector2.Distance(transform.position, lineRendererPosition)), LayerMask.NameToLayer("Environment"));
 

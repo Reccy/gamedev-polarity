@@ -16,12 +16,11 @@ public class PlayerAudio : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        print(audioSources[0].isPlaying); 
 	}
 
     public void PlayJumpSound()
@@ -40,8 +39,18 @@ public class PlayerAudio : MonoBehaviour {
 
     public void StopGrounded()
     {
-        audioSources[0].Stop();
+        audioSources[1].Stop();
+        alreadyPlayingGrounded = false;
     }
 
+    public void PlayPolaritySound()
+    {
+        audioSources[2].PlayOneShot(audioSources[2].clip);
 
+    }
+
+    public void PlayFailSound(){
+        audioSources[3].PlayOneShot(audioSources[3].clip);
+
+    }
 }

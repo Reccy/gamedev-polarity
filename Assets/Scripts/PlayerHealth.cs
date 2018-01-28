@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
     
     DeathPanel deathPanel;
+    Music musicController;
 
     void Awake()
     {
         deathPanel = FindObjectOfType<DeathPanel>();
+        musicController = FindObjectOfType<Music>();
     }
 
     // Use this for initialization
@@ -23,15 +25,14 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
     public void Death(){
+        musicController.PlayDeathSound();
         StartCoroutine(DeathCoroutine());
     }
 
     IEnumerator DeathCoroutine()
     {
-        //TODO change death sound;
         deathPanel.gameObject.SetActive(true);
         deathPanel.StartFadeIn();
-
         Destroy(gameObject);
         yield return null;
     }
