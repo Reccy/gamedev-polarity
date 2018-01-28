@@ -45,6 +45,7 @@ public class PlayerCharacter : MonoBehaviour {
     
     private void Awake()
     {
+        Application.targetFrameRate = 30;
         rb = GetComponent<Rigidbody2D>();
         playerAudio = GetComponent<PlayerAudio>();
     }
